@@ -1,0 +1,965 @@
+program HELICOPTER;
+uses graph,crt;
+Type
+  TListItem = Record
+    Data : Integer;
+    Next : ^TListItem;
+  end;
+var
+vga,vgahi:integer;
+n,xgrad,ygrad: integer;
+x,y,s,i,j: integer;
+a : array [1..500] of real;
+b : array [1..500] of integer;
+samMask1 : array [0..15, 0..23] of integer;
+samMask2 : array [0..15, 0..23] of integer;
+t: real;
+samx:integer;
+samy: real;
+{}
+PixelArray: array[1..1280] of integer;
+PixelListHead: TListItem;
+PixelList: array[1..1280] of TListItem;
+PixelPtr: ^TListItem;
+const
+xmax = 1280;
+Label
+Label1,Label2,Label3;
+BEGIN
+samMask1[0,0]:=0;
+samMask1[0,1]:=0;
+samMask1[0,2]:=0;
+samMask1[0,3]:=0;
+samMask1[0,4]:=0;
+samMask1[0,5]:=0;
+samMask1[0,6]:=0;
+samMask1[0,7]:=0;
+samMask1[0,8]:=0;
+samMask1[0,9]:=0;
+samMask1[0,10]:=0;
+samMask1[0,11]:=0;
+samMask1[0,12]:=0;
+samMask1[0,13]:=0;
+samMask1[0,14]:=0;
+samMask1[0,15]:=0;
+samMask1[0,16]:=0;
+samMask1[0,17]:=0;
+samMask1[0,18]:=0;
+samMask1[0,19]:=0;
+samMask1[0,20]:=0;
+samMask1[0,21]:=0;
+samMask1[0,22]:=0;
+samMask1[0,23]:=0;
+{}
+samMask1[1,0]:=0;
+samMask1[1,1]:=0;
+samMask1[1,2]:=0;
+samMask1[1,3]:=0;
+samMask1[1,4]:=0;
+samMask1[1,5]:=0;
+samMask1[1,6]:=0;
+samMask1[1,7]:=0;
+samMask1[1,8]:=0;
+samMask1[1,9]:=0;
+samMask1[1,10]:=0;
+samMask1[1,11]:=0;
+samMask1[1,12]:=0;
+samMask1[1,13]:=0;
+samMask1[1,14]:=0;
+samMask1[1,15]:=0;
+samMask1[1,16]:=0;
+samMask1[1,17]:=0;
+samMask1[1,18]:=0;
+samMask1[1,19]:=0;
+samMask1[1,20]:=0;
+samMask1[1,21]:=0;
+samMask1[1,22]:=0;
+samMask1[1,23]:=0;
+{}
+samMask1[2,0]:=1;
+samMask1[2,1]:=0;
+samMask1[2,2]:=0;
+samMask1[2,3]:=0;
+samMask1[2,4]:=0;
+samMask1[2,5]:=1;
+samMask1[2,6]:=1;
+samMask1[2,7]:=1;
+samMask1[2,8]:=1;
+samMask1[2,9]:=1;
+samMask1[2,10]:=1;
+samMask1[2,11]:=1;
+samMask1[2,12]:=1;
+samMask1[2,13]:=1;
+samMask1[2,14]:=1;
+samMask1[2,15]:=1;
+samMask1[2,16]:=1;
+samMask1[2,17]:=1;
+samMask1[2,18]:=1;
+samMask1[2,19]:=1;
+samMask1[2,20]:=1;
+samMask1[2,21]:=1;
+samMask1[2,22]:=1;
+samMask1[2,23]:=1;
+{}
+samMask1[3,0]:=0;
+samMask1[3,1]:=0;
+samMask1[3,2]:=0;
+samMask1[3,3]:=0;
+samMask1[3,4]:=0;
+samMask1[3,5]:=0;
+samMask1[3,6]:=0;
+samMask1[3,7]:=0;
+samMask1[3,8]:=0;
+samMask1[3,9]:=0;
+samMask1[3,10]:=0;
+samMask1[3,11]:=0;
+samMask1[3,12]:=0;
+samMask1[3,13]:=0;
+samMask1[3,14]:=1;
+samMask1[3,15]:=0;
+samMask1[3,16]:=0;
+samMask1[3,17]:=0;
+samMask1[3,18]:=0;
+samMask1[3,19]:=0;
+samMask1[3,20]:=0;
+samMask1[3,21]:=0;
+samMask1[3,22]:=0;
+samMask1[3,23]:=0;
+{}
+samMask1[4,0]:=0;
+samMask1[4,1]:=1;
+samMask1[4,2]:=1;
+samMask1[4,3]:=1;
+samMask1[4,4]:=1;
+samMask1[4,5]:=0;
+samMask1[4,6]:=0;
+samMask1[4,7]:=0;
+samMask1[4,8]:=0;
+samMask1[4,9]:=1;
+samMask1[4,10]:=1;
+samMask1[4,11]:=1;
+samMask1[4,12]:=1;
+samMask1[4,13]:=1;
+samMask1[4,14]:=1;
+samMask1[4,15]:=1;
+samMask1[4,16]:=1;
+samMask1[4,17]:=1;
+samMask1[4,18]:=0;
+samMask1[4,19]:=0;
+samMask1[4,20]:=0;
+samMask1[4,21]:=0;
+samMask1[4,22]:=0;
+samMask1[4,23]:=0;
+{}
+samMask1[5,0]:=0;
+samMask1[5,1]:=1;
+samMask1[5,2]:=1;
+samMask1[5,3]:=1;
+samMask1[5,4]:=1;
+samMask1[5,5]:=1;
+samMask1[5,6]:=1;
+samMask1[5,7]:=1;
+samMask1[5,8]:=1;
+samMask1[5,9]:=1;
+samMask1[5,10]:=0;
+samMask1[5,11]:=0;
+samMask1[5,12]:=1;
+samMask1[5,13]:=0;
+samMask1[5,14]:=0;
+samMask1[5,15]:=1;
+samMask1[5,16]:=0;
+samMask1[5,17]:=1;
+samMask1[5,18]:=1;
+samMask1[5,19]:=1;
+samMask1[5,20]:=0;
+samMask1[5,21]:=0;
+samMask1[5,22]:=0;
+samMask1[5,23]:=0;
+{}
+samMask1[6,0]:=0;
+samMask1[6,1]:=0;
+samMask1[6,2]:=0;
+samMask1[6,3]:=0;
+samMask1[6,4]:=0;
+samMask1[6,5]:=1;
+samMask1[6,6]:=1;
+samMask1[6,7]:=1;
+samMask1[6,8]:=1;
+samMask1[6,9]:=1;
+samMask1[6,10]:=0;
+samMask1[6,11]:=0;
+samMask1[6,12]:=1;
+samMask1[6,13]:=0;
+samMask1[6,14]:=0;
+samMask1[6,15]:=1;
+samMask1[6,16]:=0;
+samMask1[6,17]:=0;
+samMask1[6,18]:=0;
+samMask1[6,19]:=1;
+samMask1[6,20]:=1;
+samMask1[6,21]:=0;
+samMask1[6,22]:=0;
+samMask1[6,23]:=0;
+{}
+samMask1[7,0]:=0;
+samMask1[7,1]:=0;
+samMask1[7,2]:=1;
+samMask1[7,3]:=0;
+samMask1[7,4]:=0;
+samMask1[7,5]:=1;
+samMask1[7,6]:=1;
+samMask1[7,7]:=1;
+samMask1[7,8]:=1;
+samMask1[7,9]:=1;
+samMask1[7,10]:=1;
+samMask1[7,11]:=1;
+samMask1[7,12]:=1;
+samMask1[7,13]:=1;
+samMask1[7,14]:=1;
+samMask1[7,15]:=1;
+samMask1[7,16]:=0;
+samMask1[7,17]:=0;
+samMask1[7,18]:=0;
+samMask1[7,19]:=0;
+samMask1[7,20]:=1;
+samMask1[7,21]:=1;
+samMask1[7,22]:=0;
+samMask1[7,23]:=0;
+{}
+samMask1[8,0]:=0;
+samMask1[8,1]:=0;
+samMask1[8,2]:=0;
+samMask1[8,3]:=0;
+samMask1[8,4]:=0;
+samMask1[8,5]:=0;
+samMask1[8,6]:=1;
+samMask1[8,7]:=1;
+samMask1[8,8]:=1;
+samMask1[8,9]:=1;
+samMask1[8,10]:=1;
+samMask1[8,11]:=1;
+samMask1[8,12]:=1;
+samMask1[8,13]:=1;
+samMask1[8,14]:=1;
+samMask1[8,15]:=1;
+samMask1[8,16]:=1;
+samMask1[8,17]:=1;
+samMask1[8,18]:=1;
+samMask1[8,19]:=1;
+samMask1[8,20]:=1;
+samMask1[8,21]:=1;
+samMask1[8,22]:=1;
+samMask1[8,23]:=0;
+{}
+samMask1[9,0]:=0;
+samMask1[9,1]:=0;
+samMask1[9,2]:=0;
+samMask1[9,3]:=0;
+samMask1[9,4]:=0;
+samMask1[9,5]:=0;
+samMask1[9,6]:=0;
+samMask1[9,7]:=1;
+samMask1[9,8]:=1;
+samMask1[9,9]:=1;
+samMask1[9,10]:=1;
+samMask1[9,11]:=1;
+samMask1[9,12]:=1;
+samMask1[9,13]:=1;
+samMask1[9,14]:=1;
+samMask1[9,15]:=1;
+samMask1[9,16]:=1;
+samMask1[9,17]:=1;
+samMask1[9,18]:=1;
+samMask1[9,19]:=1;
+samMask1[9,20]:=1;
+samMask1[9,21]:=1;
+samMask1[9,22]:=1;
+samMask1[9,23]:=0;
+{}
+samMask1[10,0]:=0;
+samMask1[10,1]:=0;
+samMask1[10,2]:=0;
+samMask1[10,3]:=0;
+samMask1[10,4]:=0;
+samMask1[10,5]:=0;
+samMask1[10,6]:=0;
+samMask1[10,7]:=0;
+samMask1[10,8]:=0;
+samMask1[10,9]:=1;
+samMask1[10,10]:=1;
+samMask1[10,11]:=1;
+samMask1[10,12]:=1;
+samMask1[10,13]:=1;
+samMask1[10,14]:=1;
+samMask1[10,15]:=1;
+samMask1[10,16]:=1;
+samMask1[10,17]:=1;
+samMask1[10,18]:=1;
+samMask1[10,19]:=1;
+samMask1[10,20]:=1;
+samMask1[10,21]:=1;
+samMask1[10,22]:=0;
+samMask1[10,23]:=0;
+{}
+samMask1[11,0]:=0;
+samMask1[11,1]:=0;
+samMask1[11,2]:=0;
+samMask1[11,3]:=0;
+samMask1[11,4]:=0;
+samMask1[11,5]:=0;
+samMask1[11,6]:=0;
+samMask1[11,7]:=0;
+samMask1[11,8]:=0;
+samMask1[11,9]:=0;
+samMask1[11,10]:=1;
+samMask1[11,11]:=1;
+samMask1[11,12]:=1;
+samMask1[11,13]:=1;
+samMask1[11,14]:=1;
+samMask1[11,15]:=1;
+samMask1[11,16]:=1;
+samMask1[11,17]:=1;
+samMask1[11,18]:=1;
+samMask1[11,19]:=1;
+samMask1[11,20]:=1;
+samMask1[11,21]:=0;
+samMask1[11,22]:=0;
+samMask1[11,23]:=0;
+{}
+samMask1[12,0]:=0;
+samMask1[12,1]:=0;
+samMask1[12,2]:=0;
+samMask1[12,3]:=0;
+samMask1[12,4]:=0;
+samMask1[12,5]:=0;
+samMask1[12,6]:=0;
+samMask1[12,7]:=0;
+samMask1[12,8]:=0;
+samMask1[12,9]:=0;
+samMask1[12,10]:=0;
+samMask1[12,11]:=0;
+samMask1[12,12]:=0;
+samMask1[12,13]:=1;
+samMask1[12,14]:=0;
+samMask1[12,15]:=0;
+samMask1[12,16]:=0;
+samMask1[12,17]:=0;
+samMask1[12,18]:=1;
+samMask1[12,19]:=0;
+samMask1[12,20]:=0;
+samMask1[12,21]:=0;
+samMask1[12,22]:=1;
+samMask1[12,23]:=0;
+{}
+samMask1[13,0]:=0;
+samMask1[13,1]:=0;
+samMask1[13,2]:=0;
+samMask1[13,3]:=0;
+samMask1[13,4]:=0;
+samMask1[13,5]:=0;
+samMask1[13,6]:=0;
+samMask1[13,7]:=0;
+samMask1[13,8]:=1;
+samMask1[13,9]:=1;
+samMask1[13,10]:=1;
+samMask1[13,11]:=1;
+samMask1[13,12]:=1;
+samMask1[13,13]:=1;
+samMask1[13,14]:=1;
+samMask1[13,15]:=1;
+samMask1[13,16]:=1;
+samMask1[13,17]:=1;
+samMask1[13,18]:=1;
+samMask1[13,19]:=1;
+samMask1[13,20]:=1;
+samMask1[13,21]:=1;
+samMask1[13,22]:=0;
+samMask1[13,23]:=0;
+{}
+samMask1[14,0]:=0;
+samMask1[14,1]:=0;
+samMask1[14,2]:=0;
+samMask1[14,3]:=0;
+samMask1[14,4]:=0;
+samMask1[14,5]:=0;
+samMask1[14,6]:=0;
+samMask1[14,7]:=0;
+samMask1[14,8]:=0;
+samMask1[14,9]:=0;
+samMask1[14,10]:=0;
+samMask1[14,11]:=0;
+samMask1[14,12]:=0;
+samMask1[14,13]:=0;
+samMask1[14,14]:=0;
+samMask1[14,15]:=0;
+samMask1[14,16]:=0;
+samMask1[14,17]:=0;
+samMask1[14,18]:=0;
+samMask1[14,19]:=0;
+samMask1[14,20]:=0;
+samMask1[14,21]:=0;
+samMask1[14,22]:=0;
+samMask1[14,23]:=0;
+{}
+samMask1[15,0]:=0;
+samMask1[15,1]:=0;
+samMask1[15,2]:=0;
+samMask1[15,3]:=0;
+samMask1[15,4]:=0;
+samMask1[15,5]:=0;
+samMask1[15,6]:=0;
+samMask1[15,7]:=0;
+samMask1[15,8]:=0;
+samMask1[15,9]:=0;
+samMask1[15,10]:=0;
+samMask1[15,11]:=0;
+samMask1[15,12]:=0;
+samMask1[15,13]:=0;
+samMask1[15,14]:=0;
+samMask1[15,15]:=0;
+samMask1[15,16]:=0;
+samMask1[15,17]:=0;
+samMask1[15,18]:=0;
+samMask1[15,19]:=0;
+samMask1[15,20]:=0;
+samMask1[15,21]:=0;
+samMask1[15,22]:=0;
+samMask1[15,23]:=0;
+{2 Sprite}
+samMask2[0,0]:=0;
+samMask2[0,1]:=0;
+samMask2[0,2]:=0;
+samMask2[0,3]:=0;
+samMask2[0,4]:=0;
+samMask2[0,5]:=0;
+samMask2[0,6]:=0;
+samMask2[0,7]:=0;
+samMask2[0,8]:=0;
+samMask2[0,9]:=0;
+samMask2[0,10]:=0;
+samMask2[0,11]:=0;
+samMask2[0,12]:=0;
+samMask2[0,13]:=0;
+samMask2[0,14]:=0;
+samMask2[0,15]:=0;
+samMask2[0,16]:=0;
+samMask2[0,17]:=0;
+samMask2[0,18]:=0;
+samMask2[0,19]:=0;
+samMask2[0,20]:=0;
+samMask2[0,21]:=0;
+samMask2[0,22]:=0;
+samMask2[0,23]:=0;
+{}
+samMask2[1,0]:=0;
+samMask2[1,1]:=0;
+samMask2[1,2]:=0;
+samMask2[1,3]:=0;
+samMask2[1,4]:=0;
+samMask2[1,5]:=0;
+samMask2[1,6]:=0;
+samMask2[1,7]:=0;
+samMask2[1,8]:=0;
+samMask2[1,9]:=0;
+samMask2[1,10]:=0;
+samMask2[1,11]:=0;
+samMask2[1,12]:=0;
+samMask2[1,13]:=0;
+samMask2[1,14]:=0;
+samMask2[1,15]:=0;
+samMask2[1,16]:=0;
+samMask2[1,17]:=0;
+samMask2[1,18]:=0;
+samMask2[1,19]:=0;
+samMask2[1,20]:=0;
+samMask2[1,21]:=0;
+samMask2[1,22]:=0;
+samMask2[1,23]:=0;
+{}
+samMask2[2,0]:=0;
+samMask2[2,1]:=0;
+samMask2[2,2]:=1;
+samMask2[2,3]:=0;
+samMask2[2,4]:=0;
+samMask2[2,5]:=0;
+samMask2[2,6]:=0;
+samMask2[2,7]:=0;
+samMask2[2,8]:=0;
+samMask2[2,9]:=0;
+samMask2[2,10]:=0;
+samMask2[2,11]:=0;
+samMask2[2,12]:=0;
+samMask2[2,13]:=0;
+samMask2[2,14]:=1;
+samMask2[2,15]:=0;
+samMask2[2,16]:=0;
+samMask2[2,17]:=0;
+samMask2[2,18]:=0;
+samMask2[2,19]:=0;
+samMask2[2,20]:=0;
+samMask2[2,21]:=0;
+samMask2[2,22]:=0;
+samMask2[2,23]:=0;
+{}
+samMask2[3,0]:=0;
+samMask2[3,1]:=0;
+samMask2[3,2]:=0;
+samMask2[3,3]:=0;
+samMask2[3,4]:=0;
+samMask2[3,5]:=0;
+samMask2[3,6]:=0;
+samMask2[3,7]:=0;
+samMask2[3,8]:=0;
+samMask2[3,9]:=0;
+samMask2[3,10]:=0;
+samMask2[3,11]:=0;
+samMask2[3,12]:=0;
+samMask2[3,13]:=0;
+samMask2[3,14]:=1;
+samMask2[3,15]:=0;
+samMask2[3,16]:=0;
+samMask2[3,17]:=0;
+samMask2[3,18]:=0;
+samMask2[3,19]:=0;
+samMask2[3,20]:=0;
+samMask2[3,21]:=0;
+samMask2[3,22]:=0;
+samMask2[3,23]:=0;
+{}
+samMask2[4,0]:=0;
+samMask2[4,1]:=1;
+samMask2[4,2]:=1;
+samMask2[4,3]:=1;
+samMask2[4,4]:=1;
+samMask2[4,5]:=0;
+samMask2[4,6]:=0;
+samMask2[4,7]:=0;
+samMask2[4,8]:=0;
+samMask2[4,9]:=1;
+samMask2[4,10]:=1;
+samMask2[4,11]:=1;
+samMask2[4,12]:=1;
+samMask2[4,13]:=1;
+samMask2[4,14]:=1;
+samMask2[4,15]:=1;
+samMask2[4,16]:=1;
+samMask2[4,17]:=1;
+samMask2[4,18]:=0;
+samMask2[4,19]:=0;
+samMask2[4,20]:=0;
+samMask2[4,21]:=0;
+samMask2[4,22]:=0;
+samMask2[4,23]:=0;
+{}
+samMask2[5,0]:=0;
+samMask2[5,1]:=1;
+samMask2[5,2]:=1;
+samMask2[5,3]:=1;
+samMask2[5,4]:=1;
+samMask2[5,5]:=1;
+samMask2[5,6]:=1;
+samMask2[5,7]:=1;
+samMask2[5,8]:=1;
+samMask2[5,9]:=1;
+samMask2[5,10]:=0;
+samMask2[5,11]:=0;
+samMask2[5,12]:=1;
+samMask2[5,13]:=0;
+samMask2[5,14]:=0;
+samMask2[5,15]:=1;
+samMask2[5,16]:=0;
+samMask2[5,17]:=1;
+samMask2[5,18]:=1;
+samMask2[5,19]:=1;
+samMask2[5,20]:=0;
+samMask2[5,21]:=0;
+samMask2[5,22]:=0;
+samMask2[5,23]:=0;
+{}
+samMask2[6,0]:=0;
+samMask2[6,1]:=0;
+samMask2[6,2]:=0;
+samMask2[6,3]:=0;
+samMask2[6,4]:=0;
+samMask2[6,5]:=1;
+samMask2[6,6]:=1;
+samMask2[6,7]:=1;
+samMask2[6,8]:=1;
+samMask2[6,9]:=1;
+samMask2[6,10]:=0;
+samMask2[6,11]:=0;
+samMask2[6,12]:=1;
+samMask2[6,13]:=0;
+samMask2[6,14]:=0;
+samMask2[6,15]:=1;
+samMask2[6,16]:=0;
+samMask2[6,17]:=0;
+samMask2[6,18]:=0;
+samMask2[6,19]:=1;
+samMask2[6,20]:=1;
+samMask2[6,21]:=0;
+samMask2[6,22]:=0;
+samMask2[6,23]:=0;
+{}
+samMask2[7,0]:=1;
+samMask2[7,1]:=0;
+samMask2[7,2]:=0;
+samMask2[7,3]:=0;
+samMask2[7,4]:=0;
+samMask2[7,5]:=1;
+samMask2[7,6]:=1;
+samMask2[7,7]:=1;
+samMask2[7,8]:=1;
+samMask2[7,9]:=1;
+samMask2[7,10]:=1;
+samMask2[7,11]:=1;
+samMask2[7,12]:=1;
+samMask2[7,13]:=1;
+samMask2[7,14]:=1;
+samMask2[7,15]:=1;
+samMask2[7,16]:=0;
+samMask2[7,17]:=0;
+samMask2[7,18]:=0;
+samMask2[7,19]:=0;
+samMask2[7,20]:=1;
+samMask2[7,21]:=1;
+samMask2[7,22]:=0;
+samMask2[7,23]:=0;
+{}
+samMask2[8,0]:=0;
+samMask2[8,1]:=0;
+samMask2[8,2]:=0;
+samMask2[8,3]:=0;
+samMask2[8,4]:=0;
+samMask2[8,5]:=0;
+samMask2[8,6]:=1;
+samMask2[8,7]:=1;
+samMask2[8,8]:=1;
+samMask2[8,9]:=1;
+samMask2[8,10]:=1;
+samMask2[8,11]:=1;
+samMask2[8,12]:=1;
+samMask2[8,13]:=1;
+samMask2[8,14]:=1;
+samMask2[8,15]:=1;
+samMask2[8,16]:=1;
+samMask2[8,17]:=1;
+samMask2[8,18]:=1;
+samMask2[8,19]:=1;
+samMask2[8,20]:=1;
+samMask2[8,21]:=1;
+samMask2[8,22]:=1;
+samMask2[8,23]:=0;
+{}
+samMask2[9,0]:=0;
+samMask2[9,1]:=0;
+samMask2[9,2]:=0;
+samMask2[9,3]:=0;
+samMask2[9,4]:=0;
+samMask2[9,5]:=0;
+samMask2[9,6]:=0;
+samMask2[9,7]:=1;
+samMask2[9,8]:=1;
+samMask2[9,9]:=1;
+samMask2[9,10]:=1;
+samMask2[9,11]:=1;
+samMask2[9,12]:=1;
+samMask2[9,13]:=1;
+samMask2[9,14]:=1;
+samMask2[9,15]:=1;
+samMask2[9,16]:=1;
+samMask2[9,17]:=1;
+samMask2[9,18]:=1;
+samMask2[9,19]:=1;
+samMask2[9,20]:=1;
+samMask2[9,21]:=1;
+samMask2[9,22]:=1;
+samMask2[9,23]:=0;
+{}
+samMask2[10,0]:=0;
+samMask2[10,1]:=0;
+samMask2[10,2]:=0;
+samMask2[10,3]:=0;
+samMask2[10,4]:=0;
+samMask2[10,5]:=0;
+samMask2[10,6]:=0;
+samMask2[10,7]:=0;
+samMask2[10,8]:=0;
+samMask2[10,9]:=1;
+samMask2[10,10]:=1;
+samMask2[10,11]:=1;
+samMask2[10,12]:=1;
+samMask2[10,13]:=1;
+samMask2[10,14]:=1;
+samMask2[10,15]:=1;
+samMask2[10,16]:=1;
+samMask2[10,17]:=1;
+samMask2[10,18]:=1;
+samMask2[10,19]:=1;
+samMask2[10,20]:=1;
+samMask2[10,21]:=1;
+samMask2[10,22]:=0;
+samMask2[10,23]:=0;
+{}
+samMask2[11,0]:=0;
+samMask2[11,1]:=0;
+samMask2[11,2]:=0;
+samMask2[11,3]:=0;
+samMask2[11,4]:=0;
+samMask2[11,5]:=0;
+samMask2[11,6]:=0;
+samMask2[11,7]:=0;
+samMask2[11,8]:=0;
+samMask2[11,9]:=0;
+samMask2[11,10]:=1;
+samMask2[11,11]:=1;
+samMask2[11,12]:=1;
+samMask2[11,13]:=1;
+samMask2[11,14]:=1;
+samMask2[11,15]:=1;
+samMask2[11,16]:=1;
+samMask2[11,17]:=1;
+samMask2[11,18]:=1;
+samMask2[11,19]:=1;
+samMask2[11,20]:=1;
+samMask2[11,21]:=0;
+samMask2[11,22]:=0;
+samMask2[11,23]:=0;
+{}
+samMask2[12,0]:=0;
+samMask2[12,1]:=0;
+samMask2[12,2]:=0;
+samMask2[12,3]:=0;
+samMask2[12,4]:=0;
+samMask2[12,5]:=0;
+samMask2[12,6]:=0;
+samMask2[12,7]:=0;
+samMask2[12,8]:=0;
+samMask2[12,9]:=0;
+samMask2[12,10]:=0;
+samMask2[12,11]:=0;
+samMask2[12,12]:=0;
+samMask2[12,13]:=1;
+samMask2[12,14]:=0;
+samMask2[12,15]:=0;
+samMask2[12,16]:=0;
+samMask2[12,17]:=0;
+samMask2[12,18]:=1;
+samMask2[12,19]:=0;
+samMask2[12,20]:=0;
+samMask2[12,21]:=0;
+samMask2[12,22]:=1;
+samMask2[12,23]:=0;
+{}
+samMask2[13,0]:=0;
+samMask2[13,1]:=0;
+samMask2[13,2]:=0;
+samMask2[13,3]:=0;
+samMask2[13,4]:=0;
+samMask2[13,5]:=0;
+samMask2[13,6]:=0;
+samMask2[13,7]:=0;
+samMask2[13,8]:=1;
+samMask2[13,9]:=1;
+samMask2[13,10]:=1;
+samMask2[13,11]:=1;
+samMask2[13,12]:=1;
+samMask2[13,13]:=1;
+samMask2[13,14]:=1;
+samMask2[13,15]:=1;
+samMask2[13,16]:=1;
+samMask2[13,17]:=1;
+samMask2[13,18]:=1;
+samMask2[13,19]:=1;
+samMask2[13,20]:=1;
+samMask2[13,21]:=1;
+samMask2[13,22]:=0;
+samMask2[13,23]:=0;
+{}
+samMask2[14,0]:=0;
+samMask2[14,1]:=0;
+samMask2[14,2]:=0;
+samMask2[14,3]:=0;
+samMask2[14,4]:=0;
+samMask2[14,5]:=0;
+samMask2[14,6]:=0;
+samMask2[14,7]:=0;
+samMask2[14,8]:=0;
+samMask2[14,9]:=0;
+samMask2[14,10]:=0;
+samMask2[14,11]:=0;
+samMask2[14,12]:=0;
+samMask2[14,13]:=0;
+samMask2[14,14]:=0;
+samMask2[14,15]:=0;
+samMask2[14,16]:=0;
+samMask2[14,17]:=0;
+samMask2[14,18]:=0;
+samMask2[14,19]:=0;
+samMask2[14,20]:=0;
+samMask2[14,21]:=0;
+samMask2[14,22]:=0;
+samMask2[14,23]:=0;
+{}
+samMask2[15,0]:=0;
+samMask2[15,1]:=0;
+samMask2[15,2]:=0;
+samMask2[15,3]:=0;
+samMask2[15,4]:=0;
+samMask2[15,5]:=0;
+samMask2[15,6]:=0;
+samMask2[15,7]:=0;
+samMask2[15,8]:=0;
+samMask2[15,9]:=0;
+samMask2[15,10]:=0;
+samMask2[15,11]:=0;
+samMask2[15,12]:=0;
+samMask2[15,13]:=0;
+samMask2[15,14]:=0;
+samMask2[15,15]:=0;
+samMask2[15,16]:=0;
+samMask2[15,17]:=0;
+samMask2[15,18]:=0;
+samMask2[15,19]:=0;
+samMask2[15,20]:=0;
+samMask2[15,21]:=0;
+samMask2[15,22]:=0;
+samMask2[15,23]:=0;
+
+t:=0.0;
+InitGraph(vga, vgahi ,'c:\prg\bp\bgi');
+For n:=1 to 500 do
+   begin
+   a[n]:=Random(1280);
+   b[n]:=Random(320);
+   end;
+xgrad:=0;
+Randomize;
+s:=0;
+for i:=1 to 1280 Do
+	begin
+		s:=s+Random(9)-4;
+		PixelArray[i]:=800-s;
+	end;
+
+For i:= 1 to 1279 Do
+	begin
+		PixelList[i].Data := PixelArray[i];
+		PixelList[i].Next := @PixelList[i+1];
+	end;
+PixelList[1280].Next := @PixelList[1];
+PixelList[1280].Data := PixelArray[1280];
+
+
+PixelListHead.Next := @PixelList[1];
+PixelPtr := @PixelList[1];
+For j:=1 to 1280 Do
+	begin
+		PutPixel(j,PixelArray[j],15);
+	end;
+
+
+
+For j:= 1 to 1280 Do
+	begin
+		PutPixel(j,PixelArray[j],0);
+	end;
+Label1:
+samx:=200;
+samy:=round(500 + 100* sin(Pi*t/200));
+
+For i:=0 to 15 do
+    begin
+    For j:=0 to 23 do
+    begin
+    if samMask1[i,j]=1 then Putpixel(samx+j,round(samy+i),15);
+    end;
+end;
+
+For i:=0 to 15 do
+begin
+        For j:=0 to 23 do
+        begin
+        if samMask1[i,j]=1 then Putpixel(samx+j,round(samy+i),0);
+        end;
+end;
+
+t:=t+1.0;
+samy:=round(500 + 100 * sin(Pi * t/200));
+For i:=0 to 15 do
+begin
+        For j:=0 to 23 do
+        begin
+        if samMask2[i,j]=1 then Putpixel(samx+j,round(samy+i),15);
+        end;
+end;
+{delay(90);}
+{}
+samx:=200;
+For i:=0 to 15 do
+    begin
+    For j:=0 to 23 do
+    begin
+    if samMask2[i,j]=1 then Putpixel(samx+j,round(samy+i),0);
+    end;
+end;
+
+t:=t+1.0;
+samy:=round(500 + 100 * sin(Pi * t/200));
+For i:=0 to 15 do
+begin
+        For j:=0 to 23 do
+        begin
+        if samMask1[i,j]=1 then Putpixel(samx+j,round(samy+i),15);
+        end;
+end;
+
+
+{}
+{delay(20);}
+{}
+
+For n:=1 to 500 do
+   begin
+   x:=round(a[n]);
+   Putpixel(x,b[n],0);
+   IF n<=100 then a[n]:=a[n]-1;
+   IF (n>100) and (n<=200) then a[n]:=a[n]-0.8;
+   IF (n>200) and (n<=300) then a[n]:=a[n]-0.6;
+   IF (n>300) and (n<=400) then a[n]:=a[n]-0.4;
+   IF (n>400) and (n<=500) then a[n]:=a[n]-0.2;
+
+   x:=round(a[n]);
+   Putpixel(x,b[n],15);
+   IF a[n]<=0 then
+     begin
+     x:=round(a[n]);
+     Putpixel(x,b[n],0);
+     a[n]:=1280;
+     b[n]:=Random(320);
+     end;
+   end;
+
+PixelPtr:=PixelListHead.Next;
+
+For j:= 1 to 1280 Do
+	begin
+		PutPixel(j,PixelPtr^.Data,15);
+		PixelPtr:=PixelPtr^.Next;
+	end;
+
+
+
+PixelPtr:= PixelListHead.Next;
+For j:= 1 to 1280 Do
+	begin
+		PutPixel(j,PixelPtr^.Data, 0);
+		PixelPtr:=PixelPtr^.Next;
+	end;
+
+PixelListHead.Next := (PixelListHead.Next)^.Next;
+If KeyPressed=true then goto label2;
+GOTO label1;
+label2:
+Closegraph;
+end.
